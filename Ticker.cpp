@@ -98,6 +98,10 @@ void Ticker::interval(uint32_t timer) {
 	this->timer = timer;
 	}
 
+void Ticker::repeats(uint32_t repeat) {
+    this->repeat = repeat;
+	}	
+
 uint32_t Ticker::elapsed() {
 	if (resolution == MILLIS) return millis() - lastTime;
 	else return micros() - lastTime;
