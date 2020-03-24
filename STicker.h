@@ -46,7 +46,7 @@ enum status_t {STOPPED, RUNNING, PAUSED};
 
 typedef void (*fptr)();
 
-class Ticker {
+class STicker {
 
 public:
 
@@ -58,12 +58,12 @@ public:
 	 * @param resolution default MICROS for tickers under 70min, use MILLIS for tickers over 70 min
 	 *
 	 */
-	Ticker(fptr callback, uint32_t timer, uint32_t repeat = 0, resolution_t resolution = MICROS);
+	STicker(fptr callback, uint32_t timer, uint32_t repeat = 0, resolution_t resolution = MICROS);
 
 	/** destructor for the Ticker object
 	 *
 	 */
-	~Ticker();
+	~STicker();
 
 	/** start the ticker
 	 *

@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-#include "Ticker.h"
+#include "STicker.h"
 
-Ticker::Ticker(fptr callback, uint32_t timer, uint32_t repeat, resolution_t resolution) {
+STicker::STicker(fptr callback, uint32_t timer, uint32_t repeat, resolution_t resolution) {
 	this->resolution = resolution;
 	if (resolution == MICROS) timer = timer * 1000;
 	this->timer = timer;
@@ -35,9 +35,9 @@ Ticker::Ticker(fptr callback, uint32_t timer, uint32_t repeat, resolution_t reso
 	counts = 0;
 	}
 
-Ticker::~Ticker() {}
+STicker::~STicker() {}
 
-void Ticker::start() {
+void STicker::start() {
 	if (callback == NULL) return;
 	if (resolution == MILLIS) lastTime = millis();
 	else lastTime = micros();
@@ -46,7 +46,7 @@ void Ticker::start() {
 	status = RUNNING;
 	}
 
-void Ticker::resume() {
+void STicker::resume() {
 	if (callback == NULL) return;
 	if (resolution == MILLIS) lastTime = millis() - diffTime;
 	else lastTime = micros() - diffTime;
@@ -55,24 +55,24 @@ void Ticker::resume() {
 	status = RUNNING;
 	}
 
-void Ticker::stop() {
+void STicker::stop() {
 	enabled = false;
 	counts = 0;
 	status = STOPPED;
 	}
 
-void Ticker::pause() {
+void STicker::pause() {
 	if (resolution == MILLIS) diffTime = millis() - lastTime;
 	else diffTime = micros() - lastTime;
 	enabled = false;
 	status = PAUSED;
 	}
 
-void Ticker::update() {
+void STicker::update() {
 	if (tick()) callback();
 	}
 
-bool Ticker::tick() {
+bool STicker::tick() {
 	if (!enabled)	return false;
 	if (resolution == MILLIS) {
 		if ((millis() - lastTime) >= timer) {
@@ -93,24 +93,24 @@ bool Ticker::tick() {
 	return false;
 	}
 
-void Ticker::interval(uint32_t timer) {
+void STicker::interval(uint32_t timer) {
 	if (resolution == MICROS) timer = timer * 1000;
 	this->timer = timer;
 	}
 
-void Ticker::repeats(uint32_t repeat) {
+void STicker::repeats(uint32_t repeat) {
     this->repeat = repeat;
 	}	
 
-uint32_t Ticker::elapsed() {
+uint32_t STicker::elapsed() {
 	if (resolution == MILLIS) return millis() - lastTime;
 	else return micros() - lastTime;
 	}
 
-status_t Ticker::state() {
+status_t STicker::state() {
 	return status;
 	}
 
-uint32_t Ticker::counter() {
+uint32_t STicker::counter() {
 	return counts;
 	}
