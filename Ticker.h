@@ -96,6 +96,13 @@ public:
 	 * @param timer interval length in ms or us
 	 */
 	void interval(uint32_t timer);
+	
+	/**
+	 * @brief set the interval timer
+	 * 
+	 * @param repeat default 0 -> endless, repeat > 0 -> number of repeats
+	 */
+	void repeats(uint32_t repeat);	
 
 	/** actual ellapsed time
 	 *
