@@ -33,6 +33,7 @@ STicker::STicker(fptr callback, uint32_t timer, uint32_t repeat, resolution_t re
 	enabled = false;
 	lastTime = 0;
 	counts = 0;
+	status = STOPPED;
 	}
 
 STicker::~STicker() {}
@@ -73,23 +74,17 @@ void STicker::update() {
 	}
 
 bool STicker::tick() {
-	if (!enabled)	return false;
-	if (resolution == MILLIS) {
-		if ((millis() - lastTime) >= timer) {
-			lastTime = millis();
-			if (repeat - counts == 1) enabled = false;
-			counts++;				
-	  	return true;
+	if (!enabled)	return false;	
+	uint32_t currentTime = (resolution == MILLIS) ? millis() : micros();
+ 	if ((currentTime - lastTime) >= timer) {
+ 		lastTime = currentTime;
+ 		if (repeat - counts == 1 && counts != 0xFFFFFFFF) {
+			enabled = false;
+			status = STOPPED;
 			}
-		}
-	else {
-		if ((micros() - lastTime) >= timer) {
-			lastTime = micros();
-			if (repeat - counts == 1) enabled = false;
-			counts++;
-			return true;
-			}
-		}
+		counts++;
+ 		return true;
+ 		}
 	return false;
 	}
 
@@ -98,15 +93,15 @@ void STicker::interval(uint32_t timer) {
 	this->timer = timer;
 	}
 
-void STicker::repeats(uint32_t repeat) {
-    this->repeat = repeat;
-	}	
-
 uint32_t STicker::elapsed() {
 	if (resolution == MILLIS) return millis() - lastTime;
 	else return micros() - lastTime;
 	}
 
+void STicker::repeats(uint32_t repeat) {
+    this->repeat = repeat;
+	}
+	
 status_t STicker::state() {
 	return status;
 	}

@@ -96,13 +96,6 @@ public:
 	 * @param timer interval length in ms or us
 	 */
 	void interval(uint32_t timer);
-	
-	/**
-	 * @brief set the interval timer
-	 * 
-	 * @param repeat default 0 -> endless, repeat > 0 -> number of repeats
-	 */
-	void repeats(uint32_t repeat);	
 
 	/** actual ellapsed time
 	 *
@@ -110,7 +103,14 @@ public:
 	 *
 	 */
 	uint32_t elapsed();
-
+	
+	/**
+	 * @brief set the number of executed repeats
+	 * 
+	 * @param repeat the number of repeats to be executed
+	 */
+	void repeats(uint32_t repeat);
+	
 	/** get the state of the ticker
 	 *
 	 * @returns the state of the ticker: STOPPED, RUNNING or PAUSED
